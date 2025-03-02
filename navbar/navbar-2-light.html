@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Light Theme Navbar</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Sticky navbar */
+        .sticky {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        /* Mega menu animation */
+        .mega-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .mega-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* Mobile menu animation */
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .mobile-menu.active {
+            max-height: 500px; /* Adjust based on content */
+        }
+    </style>
+
+</head>
+<body class="bg-gray-50">
+    
+    <!-- Navbar -->
+    <nav class="sticky bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+
+                <!-- Left Section: Logo -->
+                <div class="flex items-center">
+                    <a href="#" class="flex-shrink-0">
+                        <img class="h-10 w-10" src="https://cdn-icons-png.flaticon.com/512/1246/1246314.png" alt="Logo">
+                    </a>
+                </div>
+
+                <!-- Center Section: Links -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="#" class="text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                        Home
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                        About
+                    </a>
+                    <div class="relative group">
+                        <button class="text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors flex items-center">
+                            Services
+                            <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <!-- Mega Menu -->
+                        <div class="mega-menu absolute left-0 mt-2 w-96 bg-white rounded-lg shadow-lg p-6 grid grid-cols-2 gap-4">
+                            <a href="#" class="text-gray-700 hover:text-indigo-600 flex items-center space-x-2">
+                                <i class="fas fa-paint-brush text-indigo-600"></i>
+                                <span>Web Design</span>
+                            </a>
+                            <a href="#" class="text-gray-700 hover:text-indigo-600 flex items-center space-x-2">
+                                <i class="fas fa-chart-line text-indigo-600"></i>
+                                <span>SEO</span>
+                            </a>
+                            <a href="#" class="text-gray-700 hover:text-indigo-600 flex items-center space-x-2">
+                                <i class="fas fa-bullhorn text-indigo-600"></i>
+                                <span>Marketing</span>
+                            </a>
+                            <a href="#" class="text-gray-700 hover:text-indigo-600 flex items-center space-x-2">
+                                <i class="fas fa-mobile-alt text-indigo-600"></i>
+                                <span>App Development</span>
+                            </a>
+                        </div>
+                    </div>
+                    <a href="#" class="text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition-colors">
+                        Contact
+                    </a>
+                </div>
+
+                <!-- Right Section: Buttons -->
+                <div class="hidden lg:flex items-center space-x-4">
+                    <a href="#" class="text-gray-700 hover:text-indigo-600 px-4 py-2 text-sm font-medium">
+                        Login
+                    </a>
+                    <a href="#" class="bg-indigo-600 text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-indigo-700 transition-colors">
+                        Sign Up
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuButton" class="lg:hidden p-2 text-gray-700 hover:text-indigo-600 focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="lg:hidden mobile-menu">
+            <div class="px-4 pb-4 space-y-2">
+                <a href="#" class="block text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium">
+                    Home
+                </a>
+                <a href="#" class="block text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium">
+                    About
+                </a>
+                <a href="#" class="block text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium">
+                    Services
+                </a>
+                <a href="#" class="block text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium">
+                    Contact
+                </a>
+                <div class="border-t border-gray-200 pt-2">
+                    <a href="#" class="block text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium">
+                        Login
+                    </a>
+                    <a href="#" class="block bg-indigo-600 text-white px-6 py-2 rounded-full text-sm font-medium text-center hover:bg-indigo-700 transition-colors">
+                        Sign Up
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <!-- Main Content -->
+    <main class="p-8">
+        <h1 class="text-3xl font-bold text-gray-800">Welcome to the Website</h1>
+        <p class="mt-4 text-gray-600">This is a demo of a modern light-themed navbar.</p>
+    </main>
+
+
+
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+                mobileMenu.classList.remove('active');
+            }
+        });
+
+        // Mega Menu Toggle
+        const megaMenuToggle = document.querySelector('.group');
+        const megaMenu = document.querySelector('.mega-menu');
+
+        megaMenuToggle.addEventListener('click', () => {
+            megaMenu.classList.toggle('active');
+        });
+
+        // Close mega menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!megaMenu.contains(e.target) && !megaMenuToggle.contains(e.target)) {
+                megaMenu.classList.remove('active');
+            }
+        });
+    </script>
+    
+</body>
+</html>

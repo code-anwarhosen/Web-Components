@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Form with Image Cropping</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Required cropper overrides */
+        .cropper-view-box {
+            outline: 2px solid #4f46e5;
+            border-radius: 0;
+        }
+        .cropper-dashed {
+            border: 0 dashed rgba(79, 70, 229, 0.3);
+        }
+        .cropper-point {
+            background: #4f46e5 !important;
+            width: 10px !important;
+            height: 10px !important;
+            opacity: 1 !important;
+        }
+        .cropper-line {
+            background: rgba(79, 70, 229, 0.3) !important;
+        }
+    </style>
+    
+</head>
+<body class="bg-gray-900 min-h-screen">
+    
+    <!-- Profile Form -->
+    <div class="flex justify-center p-4">
+        <form class="w-full max-w-md bg-gray-800 rounded-xl shadow-lg p-6 space-y-6">
+            
+            <!-- Avatar Section -->
+            <div class="flex flex-col items-center">
+                <div class="relative group cursor-pointer">
+                    <input type="file" id="avatarInput" accept="image/*" class="hidden">
+                    <div class="relative">
+                        <div id="avatarPreview" class="w-40 h-40 rounded-full bg-gray-700 flex items-center justify-center">
+                            <i class="fas fa-user text-4xl text-gray-400"></i>
+                        </div>
+                        <button type="button" id="openCropper" class="absolute bottom-2 right-3 bg-indigo-600 px-2 py-1 rounded-full hover:bg-indigo-800 transition-all duration-300 hover:scale-110">
+                            <i class="fas fa-camera text-white text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Form Fields -->
+            <div>
+                <label class="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
+                <input type="text" name="name" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none">
+            </div>
+            
+            <button type="submit" class="w-full py-2.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+                Update
+            </button>
+        </form>
+    </div>
+
+
+    
+    <!-- Cropper Modal -->
+    <div id="cropModal" class="hidden z-50 fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <div class="bg-gray-800 rounded-xl w-full max-w-2xl overflow-hidden">
+            <!-- Modal Header -->
+            <div class="px-6 py-3 border-b border-gray-700 flex justify-between items-center bg-gray-800">
+                <h3 class="text-lg font-semibold text-gray-200">Crop Image</h3>
+                <button id="closeCropModal" class="text-gray-400 hover:text-gray-200 transition-all duration-300 hover:scale-110">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="px-4 bg-gray-800">
+                <div class="relative mx-auto" style="height: 60vh">
+                    <img id="cropImage" class="max-w-full max-h-full rounded-lg">
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="px-6 py-3 border-t border-gray-700 flex justify-end gap-3 bg-gray-800">
+                <button type="button" id="cancelCrop" class="px-5 py-2 text-gray-300 hover:bg-gray-700 rounded-lg transition-all duration-300 hover:scale-105">
+                    Cancel
+                </button>
+                <button type="button" id="saveCrop" class="px-6 py-2 bg-indigo-600 text-white rounded-lg transition-all duration-300 hover:scale-105">
+                    OK
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <script>
+        let cropper;
+        const avatarInput = document.getElementById('avatarInput');
+        const avatarPreview = document.getElementById('avatarPreview');
+        const cropModal = document.getElementById('cropModal');
+        const cropImage = document.getElementById('cropImage');
+
+        // Open file dialog when camera icon is clicked
+        document.getElementById('openCropper').addEventListener('click', () => avatarInput.click());
+
+        // Handle file selection
+        avatarInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    cropImage.src = e.target.result;
+                    showCropModal();
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Show crop modal
+        function showCropModal() {
+            cropModal.classList.remove('hidden');
+            cropper = new Cropper(cropImage, {
+                aspectRatio: 1,
+                viewMode: 1,
+                autoCropArea: 0.8,
+                minContainerWidth: 300,
+                minContainerHeight: 300,
+                dragMode: 'move',
+                guides: false,
+                center: false,
+                highlight: false,
+                cropBoxMovable: true,
+                cropBoxResizable: true,
+                toggleDragModeOnDblclick: false,
+                ready() {
+                    // Initial crop box setup
+                    const container = this.cropper.getContainerData();
+                    const initSize = Math.min(container.width, container.height) * 0.8;
+                    this.cropper.setCropBoxData({
+                        width: initSize,
+                        height: initSize
+                    });
+                }
+            });
+        }
+
+        // Save cropped image
+        document.getElementById('saveCrop').addEventListener('click', () => {
+            const canvas = cropper.getCroppedCanvas({
+                imageSmoothingQuality: 'high',
+                fillColor: 'transparent'
+            });
+
+            canvas.toBlob((blob) => {
+                // Update file input
+                const file = new File([blob], 'avatar.jpg', { type: 'image/jpeg' });
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                avatarInput.files = dataTransfer.files;
+
+                // Update preview
+                const url = URL.createObjectURL(blob);
+                avatarPreview.innerHTML = `
+                    <img src="${url}" class="w-full h-full rounded-full object-cover">
+                `;
+
+                hideCropModal();
+            }, 'image/jpeg', 0.9);
+        });
+
+        // Close modal
+        function hideCropModal() {
+            cropModal.classList.add('hidden');
+            if(cropper) {
+                cropper.destroy();
+            }
+        }
+
+        // Close modal events
+        document.getElementById('closeCropModal').addEventListener('click', hideCropModal);
+        document.getElementById('cancelCrop').addEventListener('click', hideCropModal);
+        cropModal.addEventListener('click', (e) => e.target === cropModal && hideCropModal());
+    </script>
+
+</body>
+</html>

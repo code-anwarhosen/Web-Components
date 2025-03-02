@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Settings Modal</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @keyframes modalIn {
+            0% { opacity: 0; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes modalOut {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0.95); }
+        }
+        
+        .modal-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .modal-scroll::-webkit-scrollbar-track {
+            background: #374151;
+        }
+        .modal-scroll::-webkit-scrollbar-thumb {
+            background: #4f46e5;
+            border-radius: 4px;
+        }
+    </style>
+
+</head>
+<body class="bg-gray-900 min-h-screen">
+
+
+
+    <!-- Trigger Button -->
+    <button id="openModal" class="fixed right-4 bottom-4 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 shadow-lg">
+        <i class="fas fa-user-edit mr-2"></i>Open Modal
+    </button>
+
+
+
+
+    <!-- Modal -->
+    <div id="myModal" class="hidden z-50 fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center backdrop-blur-sm">
+        <div class="bg-gray-800 rounded-xl w-full max-w-lg mx-4 sm:px-4 transform transition-all duration-300 max-h-[90vh] flex flex-col">
+            <!-- Header -->
+            <div class="p-6 border-b border-gray-600">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-2xl font-semibold text-gray-100">
+                        <i class="fas fa-user-cog text-indigo-400 mr-2"></i>Profile Settings
+                    </h3>
+                    <button id="closeModal" class="text-gray-400 hover:text-gray-200">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Scrollable Body -->
+            <div class="overflow-y-auto modal-scroll p-6 flex-1">
+                <form class="space-y-6">
+                    
+                    <!-- Profile Picture Upload -->
+                    <div class="flex justify-center">
+                        <div class="relative w-40 h-40">
+                            <div id="avatarContainer" class="w-full h-full rounded-full bg-gray-700 flex items-center justify-center overflow-hidden">
+                                <i class="fas fa-user text-4xl text-gray-400"></i>
+                                <img id="avatarPreview" class="hidden w-full h-full object-cover">
+                            </div>
+                            <label class="absolute bottom-2 right-3 bg-indigo-600 px-2 py-1 rounded-full cursor-pointer hover:bg-indigo-700 transition-colors">
+                                <i class="fas fa-camera text-white text-sm"></i>
+                                <input type="file" id="avatarInput" accept="image/*" class="hidden">
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Name Input -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
+                        <div class="relative">
+                            <i class="fas fa-signature absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="text" class="w-full pl-10 pr-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none" required>
+                        </div>
+                    </div>
+
+                    <!-- Email Input -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+                        <div class="relative">
+                            <i class="fas fa-envelope absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="email" class="w-full pl-10 pr-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none" required>
+                        </div>
+                    </div>
+
+                    <!-- Password Input -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Password</label>
+                        <div class="relative">
+                            <i class="fas fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="password" class="w-full pl-10 pr-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none" required>
+                        </div>
+                    </div>
+
+                    <!-- Amount Input -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Monthly Budget</label>
+                        <div class="relative">
+                            <i class="fas fa-dollar-sign absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="number" class="w-full pl-10 pr-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none">
+                        </div>
+                    </div>
+
+                    <!-- Dropdown -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">User Role</label>
+                        <div class="relative">
+                            <select class="w-full pl-4 pr-10 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 appearance-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none">
+                                <option value="">Select Role</option>
+                                <option value="user">Standard User</option>
+                                <option value="admin">Administrator</option>
+                                <option value="manager">Manager</option>
+                            </select>
+                            <i class="fas fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+                        </div>
+                    </div>
+
+                    <!-- Date Input -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Date of Birth</label>
+                        <div class="relative">
+                            <i class="fas fa-calendar-day absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="date" class="w-full pl-10 pr-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none [&::-webkit-calendar-picker-indicator]:invert">
+                        </div>
+                    </div>
+
+                    <!-- Switch -->
+                    <div class="flex items-center justify-between p-3 bg-gray-700 rounded-lg">
+                        <span class="text-sm text-gray-300">Enable Two-Factor Authentication</span>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer">
+                            <div class="w-11 h-6 bg-gray-600 rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
+                        </label>
+                    </div>
+
+                    <!-- Checkbox -->
+                    <div class="p-3 bg-gray-700 rounded-lg">
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" class="w-4 h-4 text-indigo-600 bg-gray-800 border-gray-600 rounded focus:ring-indigo-500">
+                            <span class="text-sm text-gray-300">I agree to the Terms & Conditions</span>
+                        </label>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Footer -->
+            <div class="p-6 border-t border-gray-600">
+                <div class="flex justify-end space-x-3">
+                    <button type="button" id="cancelModal" class="px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg transition-colors">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors">
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        const modal = document.getElementById('myModal');
+        const openBtn = document.getElementById('openModal');
+        const closeBtns = document.querySelectorAll('#closeModal, #cancelModal');
+        const avatarInput = document.getElementById('avatarInput');
+        const avatarPreview = document.getElementById('avatarPreview');
+        const avatarContainer = document.getElementById('avatarContainer');
+
+        // Modal Animation Handling
+        function toggleModal(show) {
+            if(show) {
+                modal.classList.remove('hidden');
+                modal.children[0].style.animation = 'modalIn 0.3s ease-out';
+            } else {
+                modal.children[0].style.animation = 'modalOut 0.3s ease-in';
+                setTimeout(() => modal.classList.add('hidden'), 200);
+            }
+        }
+
+        // Avatar Upload Handling
+        avatarInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if(file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    avatarPreview.src = e.target.result;
+                    avatarPreview.classList.remove('hidden');
+                    avatarContainer.querySelector('i').classList.add('hidden');
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Event Listeners
+        openBtn.addEventListener('click', () => toggleModal(true));
+        closeBtns.forEach(btn => btn.addEventListener('click', () => toggleModal(false)));
+        modal.addEventListener('click', (e) => e.target === modal && toggleModal(false));
+        document.addEventListener('keydown', (e) => e.key === 'Escape' && toggleModal(false));
+    </script>
+
+
+</body>
+</html>

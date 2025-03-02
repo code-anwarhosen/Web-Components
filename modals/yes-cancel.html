@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yes/Cancel Modal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Modal animations */
+        @keyframes modalIn {
+            0% { opacity: 0; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes modalOut {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0.95); }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 min-h-screen flex items-center justify-center">
+    <!-- Trigger Button -->
+    <button id="openModal" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105">
+        Open Modal
+    </button>
+
+    <!-- Modal -->
+    <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center backdrop-blur-sm">
+        <div class="bg-gray-800 rounded-xl w-full max-w-md mx-4 transform transition-all duration-300">
+            <!-- Modal Header -->
+            <div class="p-6 border-b border-gray-700">
+                <h3 class="text-xl font-semibold text-gray-100">
+                    <i class="fas fa-exclamation-circle text-indigo-500 mr-2"></i>
+                    Confirm Action
+                </h3>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-6">
+                <p class="text-gray-300">
+                    Are you sure you want to perform this action? This cannot be undone.
+                </p>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-6 border-t border-gray-700 flex justify-end space-x-3">
+                <button id="cancelButton" class="px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg transition-colors">
+                    Cancel
+                </button>
+                <button id="confirmButton" class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors">
+                    Yes, Continue
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal Elements
+        const modal = document.getElementById('modal');
+        const openModalButton = document.getElementById('openModal');
+        const cancelButton = document.getElementById('cancelButton');
+        const confirmButton = document.getElementById('confirmButton');
+
+        // Open Modal
+        openModalButton.addEventListener('click', () => {
+            modal.classList.remove('hidden');
+            modal.children[0].style.animation = 'modalIn 0.3s ease-out';
+        });
+
+        // Close Modal (Cancel)
+        cancelButton.addEventListener('click', () => {
+            modal.children[0].style.animation = 'modalOut 0.2s ease-in';
+            setTimeout(() => modal.classList.add('hidden'), 200);
+        });
+
+        // Confirm Action
+        confirmButton.addEventListener('click', () => {
+            alert('Action confirmed!'); // Replace with your logic
+            modal.children[0].style.animation = 'modalOut 0.2s ease-in';
+            setTimeout(() => modal.classList.add('hidden'), 200);
+        });
+
+        // Close Modal when clicking outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.children[0].style.animation = 'modalOut 0.2s ease-in';
+                setTimeout(() => modal.classList.add('hidden'), 200);
+            }
+        });
+
+        // Close Modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                modal.children[0].style.animation = 'modalOut 0.2s ease-in';
+                setTimeout(() => modal.classList.add('hidden'), 200);
+            }
+        });
+    </script>
+</body>
+</html>

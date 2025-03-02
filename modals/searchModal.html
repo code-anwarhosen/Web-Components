@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Modal</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Modal animations */
+        @keyframes modalIn {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes modalOut {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-20px); }
+        }
+
+        /* Custom scrollbar */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #374151; /* gray-700 */
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #4f46e5; /* indigo-600 */
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #4338ca; /* indigo-700 */
+        }
+
+        /* Remove input outline and border */
+        .no-outline:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    </style>
+
+</head>
+<body class="bg-gray-900 min-h-screen">
+
+    <!-- Search Icon -->
+    <button id="openSearchModal" class="fixed right-4 bottom-4 bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2 rounded-full shadow-lg transition-all duration-300 hover:scale-110">
+        <i class="fas fa-search text-xl"></i>
+    </button>
+
+
+    <!-- Search Modal -->
+    <div id="searchModal" class="hidden z-50 fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center backdrop-blur-sm pt-20">
+        <div class="bg-gray-800 rounded-xl w-full max-w-md mx-4 transform transition-all duration-300 flex flex-col max-h-[80vh]">
+            
+            <!-- Header: Search Input and Close Button -->
+            <div class="p-6 border-b border-gray-700 flex items-center justify-between">
+                <!-- Search Input -->
+                <div class="relative flex-1">
+                    <input type="text" id="searchInput" class="w-full pl-10 pr-4 py-3 bg-gray-800 rounded-full text-gray-100 placeholder-gray-400 no-outline" placeholder="Search...">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+
+                <!-- Close Button (Top Right) -->
+                <button id="closeSearchModal" class="ml-4 px-3 py-1.5 text-gray-400 hover:text-white rounded-full hover:bg-gray-700 transition-all duration-300 hover:scale-110">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Body: Search Results (Scrollable) -->
+            <div id="searchResults" class="p-6 flex-1 overflow-y-auto custom-scrollbar">
+                <!-- Default text -->
+                <div id="defaultText" class="text-gray-400 text-center">
+                    Start typing to filter...
+                </div>
+                <!-- Dynamic results will appear here -->
+            </div>
+
+            <!-- Footer: Empty for now -->
+            <div class="p-4 border-t border-gray-700"></div>
+        </div>
+    </div>
+
+    <script>
+        // Modal and Input Elements
+        const searchModal = document.getElementById('searchModal');
+        const openSearchModalButton = document.getElementById('openSearchModal');
+        const closeSearchModalButton = document.getElementById('closeSearchModal');
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        const defaultText = document.getElementById('defaultText');
+
+        // Sample Data (replace with your data)
+        const data = [
+            { name: "John Doe", avatar: "https://randomuser.me/api/portraits/men/1.jpg", link: "#" },
+            { name: "Jane Smith", avatar: "https://randomuser.me/api/portraits/women/2.jpg", link: "#" },
+            { name: "Alice Johnson", avatar: "https://randomuser.me/api/portraits/women/3.jpg", link: "#" },
+            { name: "Bob Brown", avatar: "https://randomuser.me/api/portraits/men/4.jpg", link: "#" },
+            { name: "Charlie Davis", avatar: "https://randomuser.me/api/portraits/men/5.jpg", link: "#" },
+            { name: "Eva Wilson", avatar: "https://randomuser.me/api/portraits/women/6.jpg", link: "#" },
+            { name: "Frank Miller", avatar: "https://randomuser.me/api/portraits/men/7.jpg", link: "#" },
+            { name: "Grace Lee", avatar: "https://randomuser.me/api/portraits/women/8.jpg", link: "#" }
+        ];
+
+        // Open Modal
+        openSearchModalButton.addEventListener('click', () => {
+            searchModal.classList.remove('hidden');
+            searchModal.children[0].style.animation = 'modalIn 0.3s ease-out';
+            searchInput.focus(); // Focus on the input field
+        });
+
+        // Close Modal
+        const closeModal = () => {
+            searchModal.children[0].style.animation = 'modalOut 0.2s ease-in';
+            setTimeout(() => searchModal.classList.add('hidden'), 200);
+        };
+
+        // Close Modal with Close Button
+        closeSearchModalButton.addEventListener('click', closeModal);
+
+        // Close Modal when clicking outside
+        searchModal.addEventListener('click', (e) => {
+            if (e.target === searchModal) {
+                closeModal();
+            }
+        });
+
+        // Close Modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !searchModal.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+
+        // Filter data as Typing
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const filteredData = data.filter(dataItem => dataItem.name.toLowerCase().includes(query));
+
+            // Clear previous results
+            searchResults.innerHTML = '';
+
+            // Hide default text if user is typing
+            if (query.length > 0) {
+                defaultText.classList.add('hidden');
+            } else {
+                defaultText.classList.remove('hidden');
+            }
+
+            // Display filtered data
+            if (filteredData.length > 0) {
+                filteredData.forEach(dataItem => {
+                    const element = document.createElement('a');
+                    element.href = dataItem.link;
+                    element.className = 'flex items-center p-3 bg-gray-700 rounded-lg text-gray-300 hover:bg-gray-600 mb-1.5 transition-all duration-300 hover:scale-y-105';
+                    element.innerHTML = `
+                        <img src="${dataItem.avatar}" alt="${dataItem.name}" class="w-10 h-10 rounded-full object-cover">
+                        <span class="ml-3">${dataItem.name}</span>
+                    `;
+                    searchResults.appendChild(element);
+                });
+            } else if (query.length > 0) {
+                const noResults = document.createElement('div');
+                noResults.className = 'text-gray-400 text-center';
+                noResults.textContent = 'No data found.';
+                searchResults.appendChild(noResults);
+            }
+        });
+    </script>
+</body>
+</html>

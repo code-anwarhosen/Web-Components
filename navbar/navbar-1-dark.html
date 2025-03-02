@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Navbar</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Dropdown animation */
+        .dropdown-content {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .dropdown.active .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+    </style>
+
+</head>
+<body class="bg-gray-900 min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="bg-gray-800 border-b border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                
+                <!-- Left Section: Logo and Links -->
+                <div class="flex items-center">
+                    <!-- Logo -->
+                    <a href="#" class="flex-shrink-0">
+                        <img class="h-8 w-8" src="https://cdn-icons-png.flaticon.com/512/1246/1246314.png" alt="Logo">
+                    </a>
+                    
+                    <!-- Links -->
+                    <div class="hidden md:block ml-10">
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                                Home
+                            </a>
+                            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                                About
+                            </a>
+                            <div class="dropdown relative">
+                                <button class="dropdown-toggle text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
+                                    Services
+                                    <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                                </button>
+                                <!-- Dropdown Menu -->
+                                <div class="dropdown-content absolute top-10 left-0 bg-gray-700 rounded-lg shadow-lg w-48">
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-600">Web Design</a>
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-600">SEO</a>
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-600">Marketing</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Section: Search and User Menu -->
+                <div class="flex items-center">
+                    <!-- User Menu -->
+                    <div class="dropdown relative ml-4">
+                        <button class="dropdown-toggle flex items-center text-sm text-gray-300 hover:text-white focus:outline-none">
+                            <img class="h-8 w-8 rounded-full" src="https://avatars.githubusercontent.com/u/1?v=4" alt="User">
+                            <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <!-- Dropdown Menu -->
+                        <div class="dropdown-content absolute right-0 mt-2 bg-gray-700 rounded-lg shadow-lg w-48">
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-600">Profile</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-600">Settings</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-600">Sign Out</a>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuButton" class="md:hidden ml-4 p-2 text-gray-400 hover:text-white focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#" class="block text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">
+                    Home
+                </a>
+                <a href="#" class="block text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">
+                    About
+                </a>
+                <a href="#" class="block text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">
+                    Services
+                </a>
+
+                <!-- Search Bar -->
+                <div class="relative">
+                    <input type="text" class="bg-gray-700 text-gray-300 rounded-full pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Search...">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <script>
+        // Dropdown Toggle
+        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+        dropdownToggles.forEach(toggle => {
+            toggle.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent closing when clicking inside dropdown
+                const dropdown = toggle.closest('.dropdown');
+                dropdown.classList.toggle('active');
+            });
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', (e) => {
+            dropdownToggles.forEach(toggle => {
+                const dropdown = toggle.closest('.dropdown');
+                if (!dropdown.contains(e.target)) {
+                    dropdown.classList.remove('active');
+                }
+            });
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuButton.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent closing when clicking the button
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Input Fields - Dark Theme</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Remove input outline */
+        .no-outline:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    </style>
+
+</head>
+<body class="bg-gray-900 min-h-screen p-8">
+
+    <div class="max-w-4xl mx-auto bg-gray-800 p-8 rounded-lg shadow-lg">
+        <h1 class="text-3xl font-bold text-gray-100 mb-8">All Input Fields</h1>
+
+        <!-- Text Input -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-300 mb-2">Text Input</label>
+            <input type="text" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 placeholder-gray-400 no-outline" placeholder="Enter text...">
+        </div>
+
+        <!-- Email Input -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-300 mb-2">Email Input</label>
+            <input type="email" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 placeholder-gray-400 no-outline" placeholder="Enter email...">
+        </div>
+
+        <!-- Password Input -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-300 mb-2">Password Input</label>
+            <input type="password" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 placeholder-gray-400 no-outline" placeholder="Enter password...">
+        </div>
+
+        <!-- Number Input -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-300 mb-2">Number Input</label>
+            <input type="number" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 placeholder-gray-400 no-outline" placeholder="Enter number...">
+        </div>
+
+        <!-- Date Input -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-300 mb-2">Date Input</label>
+            <input type="date" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 no-outline">
+        </div>
+
+        <!-- Time Input -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-300 mb-2">Time Input</label>
+            <input type="time" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 no-outline">
+        </div>
+
+        <!-- Textarea -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-300 mb-2">Textarea</label>
+            <textarea class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 placeholder-gray-400 no-outline" rows="4" placeholder="Enter your message..."></textarea>
+        </div>
+
+        <!-- Select Dropdown -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-300 mb-2">Select Dropdown</label>
+            <select class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 no-outline">
+                <option value="">Select an option</option>
+                <option value="1">Option 1</option>
+                <option value="2">Option 2</option>
+                <option value="3">Option 3</option>
+            </select>
+        </div>
+
+        <!-- Checkbox -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-300 mb-2">Checkbox</label>
+            <div class="flex items-center">
+                <input type="checkbox" class="w-4 h-4 text-indigo-600 bg-gray-700 border border-gray-600 rounded focus:ring-indigo-500">
+                <span class="ml-2 text-gray-300">Check me</span>
+            </div>
+        </div>
+
+        <!-- Radio Buttons -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-300 mb-2">Radio Buttons</label>
+            <div class="space-y-2">
+                <div class="flex items-center">
+                    <input type="radio" name="radio" class="w-4 h-4 text-indigo-600 bg-gray-700 border border-gray-600 rounded-full focus:ring-indigo-500">
+                    <span class="ml-2 text-gray-300">Option 1</span>
+                </div>
+                <div class="flex items-center">
+                    <input type="radio" name="radio" class="w-4 h-4 text-indigo-600 bg-gray-700 border border-gray-600 rounded-full focus:ring-indigo-500">
+                    <span class="ml-2 text-gray-300">Option 2</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- File Input -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-300 mb-2">File Input</label>
+            <input type="file" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 no-outline">
+        </div>
+
+        <!-- Range Input -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-300 mb-2">Range Input</label>
+            <input type="range" class="w-full">
+        </div>
+
+        <!-- Color Input -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-300 mb-2">Color Input</label>
+            <input type="color" class="w-16 h-10">
+        </div>
+
+        <!-- Switch Toggle -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-300 mb-2">Switch Toggle</label>
+            <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="sr-only peer">
+                <div class="w-11 h-6 bg-gray-600 rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
+                <span class="ml-3 text-gray-300">Toggle me</span>
+            </label>
+        </div>
+
+        <!-- Search Input -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-300 mb-2">Search Input</label>
+            <div class="relative">
+                <input type="search" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 placeholder-gray-400 no-outline" placeholder="Search...">
+                <i class="fas fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            </div>
+        </div>
+
+        <!-- URL Input -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-300 mb-2">URL Input</label>
+            <input type="url" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 placeholder-gray-400 no-outline" placeholder="Enter URL...">
+        </div>
+
+        <!-- Tel Input -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-300 mb-2">Tel Input</label>
+            <input type="tel" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 placeholder-gray-400 no-outline" placeholder="Enter phone number...">
+        </div>
+
+        <!-- Hidden Input -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-300 mb-2">Hidden Input</label>
+            <input type="hidden" value="This is hidden">
+            <p class="text-gray-400">Hidden inputs are not visible to the user.</p>
+        </div>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empty Modal Template</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @keyframes modalIn {
+            0% { opacity: 0; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes modalOut {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0.95); }
+        }
+    </style>
+
+</head>
+<body class="bg-gray-900 min-h-screen">
+
+    <!-- Trigger Button -->
+    <button id="openModal" class="fixed right-4 bottom-4 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 shadow-lg">
+        <i class="fas fa-plus mr-2"></i>Open Modal
+    </button>
+
+
+
+    <!-- Modal -->
+    <div id="myModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center backdrop-blur-sm">
+        <div class="bg-gray-800 rounded-xl w-full max-w-lg mx-4 transform transition-all duration-300">
+            
+            <!-- Header -->
+            <div class="p-6 border-b border-gray-700">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-2xl font-semibold text-gray-100">
+                        Modal Title
+                    </h3>
+                    <button id="closeModal" class="text-gray-400 hover:text-gray-200">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Body -->
+            <div class="p-6">
+                <!-- Add your content here -->
+            </div>
+
+            <!-- Footer -->
+            <div class="p-6 border-t border-gray-700">
+                <div class="flex justify-end space-x-3">
+                    <button type="button" id="cancelModal" class="px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg transition-colors">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors">
+                        Save
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('myModal');
+        const openBtn = document.getElementById('openModal');
+        const closeBtns = document.querySelectorAll('#closeModal, #cancelModal');
+
+        // Modal Animation Handling
+        function toggleModal(show) {
+            if(show) {
+                modal.classList.remove('hidden');
+                modal.children[0].style.animation = 'modalIn 0.3s ease-out';
+            } else {
+                modal.children[0].style.animation = 'modalOut 0.2s ease-in';
+                setTimeout(() => modal.classList.add('hidden'), 200);
+            }
+        }
+
+        // Event Listeners
+        openBtn.addEventListener('click', () => toggleModal(true));
+        closeBtns.forEach(btn => btn.addEventListener('click', () => toggleModal(false)));
+        modal.addEventListener('click', (e) => e.target === modal && toggleModal(false));
+        document.addEventListener('keydown', (e) => e.key === 'Escape' && toggleModal(false));
+    </script>
+</body>
+</html>

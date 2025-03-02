@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Right-Side Mobile Navbar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Mobile menu animation */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        /* Overlay for mobile menu */
+        .overlay {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Left Section: Logo -->
+                <div class="flex items-center">
+                    <a href="#" class="flex-shrink-0">
+                        <img class="h-10 w-10" src="https://cdn-icons-png.flaticon.com/512/1246/1246314.png" alt="Logo">
+                    </a>
+                </div>
+
+                <!-- Center Section: Links (Desktop) -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="#" class="text-gray-700 hover:text-purple-600 px-3 py-2 text-sm font-medium transition-colors">
+                        Home
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-purple-600 px-3 py-2 text-sm font-medium transition-colors">
+                        About
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-purple-600 px-3 py-2 text-sm font-medium transition-colors">
+                        Services
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-purple-600 px-3 py-2 text-sm font-medium transition-colors">
+                        Contact
+                    </a>
+                </div>
+
+                <!-- Right Section: Buttons (Desktop) -->
+                <div class="hidden lg:flex items-center space-x-4">
+                    <a href="#" class="text-gray-700 hover:text-purple-600 px-4 py-2 text-sm font-medium">
+                        Login
+                    </a>
+                    <a href="#" class="bg-purple-600 text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition-colors">
+                        Sign Up
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuButton" class="lg:hidden p-2 text-gray-700 hover:text-purple-600 focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu (Right Side) -->
+        <div id="mobileMenu" class="mobile-menu fixed inset-y-0 right-0 w-64 bg-white shadow-lg z-50">
+            <div class="flex justify-end p-4">
+                <button id="closeMobileMenu" class="p-2 text-gray-700 hover:text-purple-600 focus:outline-none">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="px-6 space-y-4">
+                <a href="#" class="block text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-base font-medium">
+                    Home
+                </a>
+                <a href="#" class="block text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-base font-medium">
+                    About
+                </a>
+                <a href="#" class="block text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-base font-medium">
+                    Services
+                </a>
+                <a href="#" class="block text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-base font-medium">
+                    Contact
+                </a>
+                <div class="border-t border-gray-200 pt-4">
+                    <a href="#" class="block text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-base font-medium">
+                        Login
+                    </a>
+                    <a href="#" class="block bg-purple-600 text-white px-6 py-2 rounded-full text-sm font-medium text-center hover:bg-purple-700 transition-colors">
+                        Sign Up
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Overlay for Mobile Menu -->
+        <div id="overlay" class="overlay fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="p-8">
+        <h1 class="text-3xl font-bold text-gray-800">Welcome to the Website</h1>
+        <p class="mt-4 text-gray-600">This is a demo of a navbar with a right-side mobile menu.</p>
+    </main>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const closeMobileMenu = document.getElementById('closeMobileMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const overlay = document.getElementById('overlay');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            overlay.classList.add('active');
+        });
+
+        closeMobileMenu.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        overlay.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+    </script>
+</body>
+</html>
