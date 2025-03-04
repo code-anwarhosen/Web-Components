@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Floating Message Component for Django</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    /* Animation for floating message */
+    @keyframes slideIn {
+      from {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideOut {
+      from {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+    }
+
+    .floating-message {
+      animation: slideIn 0.3s ease-out;
+    }
+
+    .floating-message.hide {
+      animation: slideOut 0.3s ease-in;
+    }
+  </style>
+</head>
+<body class="bg-gray-900 p-10">
+
+  <!-- Floating Message Container -->
+  <div id="messageContainer" class="fixed top-4 left-1/2 transform -translate-x-1/2 w-full max-w-md px-4">
+    
+    <!-- success message -->
+    <div class="floating-message p-4 mb-2 rounded-lg shadow-lg text-white flex items-center space-x-3 bg-green-700">
+      <span><i class="fas fa-check-circle"></i></span>
+      <span class="flex-1">Operation completed successfully!</span>
+      <button onclick="closeMessage(this)" class="ml-auto text-white hover:text-gray-300">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- error message -->
+    <div class="floating-message p-4 mb-2 rounded-lg shadow-lg text-white flex items-center space-x-3 bg-red-700">
+      <span><i class="fas fa-times-circle"></i></span>
+      <span class="flex-1">An error occurred. Please try again.</span>
+      <button onclick="closeMessage(this)" class="ml-auto text-white hover:text-gray-300">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- warning or info message -->
+    <div class="floating-message p-4 mb-2 rounded-lg shadow-lg text-white flex items-center space-x-3 bg-yellow-700">
+      <span><i class="fas fa-info-circle"></i></span>
+      <span class="flex-1">Please try again.</span>
+      <button onclick="closeMessage(this)" class="ml-auto text-white hover:text-gray-300">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- JavaScript for Floating Messages -->
+  <script>
+    // Close message
+    function closeMessage(element) {
+      const messageElement = element.closest('.floating-message') || element;
+      messageElement.classList.add('hide');
+      messageElement.addEventListener('animationend', () => {
+        messageElement.remove();
+      });
+    }
+
+    // Auto-dismiss messages after 5 seconds
+    document.querySelectorAll('.floating-message').forEach(message => {
+      setTimeout(() => {
+        closeMessage(message);
+      }, 5000);
+    });
+
+  </script>
+</body>
+</html>
