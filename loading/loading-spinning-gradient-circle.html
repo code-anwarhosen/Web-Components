@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loading Component - Gradient Circle</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Rotating Circle Animation */
+    @keyframes rotate {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .rotating-circle {
+      animation: rotate 1.5s linear infinite;
+      background: conic-gradient(
+        from 90deg at 50% 50%,
+        rgba(79, 70, 229, 0) 0deg,
+        rgba(99, 102, 241, 1) 360deg
+      );
+    }
+  </style>
+</head>
+<body class="bg-gray-900">
+  <!-- Loading Component -->
+  <div class="fixed inset-0 flex items-center justify-center">
+    <div class="flex flex-col items-center justify-center space-y-4">
+      <!-- Rotating Gradient Circle -->
+      <div class="rotating-circle w-16 h-16 rounded-full relative">
+        <div class="absolute inset-1 bg-gray-900 rounded-full"></div>
+      </div>
+
+      <!-- Loading Text -->
+      <p class="text-gray-300">Loading, please wait...</p>
+    </div>
+  </div>
+</body>
+</html>

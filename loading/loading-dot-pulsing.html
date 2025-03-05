@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loading Component - Pulsing Dot</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Pulsing Dot Animation */
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.2);
+        opacity: 0.7;
+      }
+    }
+
+    .pulse-dot {
+      animation: pulse 1.5s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-gray-800">
+  <!-- Loading Component -->
+  <div class="fixed inset-0 flex items-center justify-center">
+    <div class="flex flex-col items-center justify-center space-y-4">
+      <!-- Pulsing Dot -->
+      <div class="pulse-dot w-6 h-6 bg-blue-600 rounded-full"></div>
+
+      <!-- Loading Text -->
+      <p class="text-gray-700">Loading, please wait...</p>
+    </div>
+  </div>
+</body>
+</html>

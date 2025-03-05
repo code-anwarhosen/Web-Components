@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loading Component - Wave Dots</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Wave Animation */
+    @keyframes wave {
+      0%, 60%, 100% {
+        transform: translateY(0);
+      }
+      30% {
+        transform: translateY(-15px);
+      }
+    }
+
+    .wave-dot {
+      animation: wave 1.5s infinite ease-in-out;
+    }
+
+    .wave-dot-1 {
+      animation-delay: 0s;
+    }
+
+    .wave-dot-2 {
+      animation-delay: 0.2s;
+    }
+
+    .wave-dot-3 {
+      animation-delay: 0.4s;
+    }
+  </style>
+</head>
+<body class="bg-gray-900">
+  <!-- Loading Component -->
+  <div class="fixed inset-0 flex items-center justify-center">
+    <div class="flex flex-col items-center justify-center space-y-4">
+      <!-- Wave Dots -->
+      <div class="flex space-x-3">
+        <div class="wave-dot wave-dot-1 w-4 h-4 bg-blue-500 rounded-full"></div>
+        <div class="wave-dot wave-dot-2 w-4 h-4 bg-blue-500 rounded-full"></div>
+        <div class="wave-dot wave-dot-3 w-4 h-4 bg-blue-500 rounded-full"></div>
+      </div>
+
+      <!-- Loading Text -->
+      <p class="text-gray-300">Loading, please wait...</p>
+    </div>
+  </div>
+</body>
+</html>
